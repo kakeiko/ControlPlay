@@ -71,11 +71,12 @@ Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 ```env
     SECRET_KEY=your-secret-key-here
 
-    DB_NAME=controlplay
-    DB_USER=postgres
-    DB_PASSWORD=postgres
-    DB_HOST=localhost
-    DB_PORT=5432
+    ENGINE=django.db.backends.postgresql_psycopg2
+    NAME=controlplay
+    USER=postgres
+    PASSWORD=postgres
+    HOST=localhost
+    PORT=5432
 ```
 ⚠️ Nunca versionar o arquivo .env
 
