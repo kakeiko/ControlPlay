@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consoles</title>
+</head>
+<body>
+    <div class="container">
+        <div class="Devices">
+            {% if devices %}
+                {% for device in devices %}
+                    <a href="{% url 'device' device.id %}">
+                        <div class="device">
+                            <p class="device-nome">{{ device.nome }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="sem-device">Não tem nenhum console conectado</p>
+            {% endif %}
+        </div>
+        <a href="{% url 'create_device' %}" class="btn-criar">Conectar Console</a>
+    </div>
+</body>
+</html>

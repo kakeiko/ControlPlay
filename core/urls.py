@@ -1,0 +1,14 @@
+from django.urls import path
+from .views import dashboard, view_profiles, view_profile, add_time, create_profile, view_device, view_devices, create_device, start_session
+
+urlpatterns = [
+    path('', dashboard, name='dashboard'),
+    path('profiles/', view_profiles, name='profiles'),
+    path('profile/<int:id>', view_profile, name='profile'),
+    path('criar_profile/', create_profile, name='create_profile'),
+    path('addTime/<int:id>', add_time, name='add_time'),
+    path('devices/', view_devices, name='devices'),
+    path('device/<int:id>', view_device, name='device'),
+    path('criar_device/', create_device, name='create_device'),
+    path('criar_session/', start_session, name='create_session'),
+]

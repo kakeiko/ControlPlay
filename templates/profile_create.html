@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Perfil</title>
+</head>
+<body>
+    <div class="container">
+        <form class="tempo" action="{% url 'create_profile'%}" method="POST">
+            {% csrf_token %}
+            <div class="form">
+                {% for field in form.visible_fields %}
+                    <div class="labels-forms">
+                        <label for="{{ field.id_for_label }}" class="nome">{{ field.label }}:</label>
+                        {{ field}}                    
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="area-btn">
+                <button class="btn-criar" type="submit">Criar Perfil</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

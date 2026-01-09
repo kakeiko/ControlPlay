@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfils</title>
+</head>
+<body>
+    <div class="container">
+        <div class="Profiles">
+            {% if profiles %}
+                {% for profile in profiles %}
+                    <a href="{% url 'profile' profile.id %}">
+                        <div class="profile">
+                            <p class="profile-nome">{{ profile.nome }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="sem-profile">Não tem nenhum Perfil criado</p>
+            {% endif %}
+        </div>
+        <a href="{% url 'create_profile' %}" class="btn-criar">Criar Perfil</a>
+    </div>
+</body>
+</html>

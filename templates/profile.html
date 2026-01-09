@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+</head>
+<body>
+    <div class="container">
+        <div class="Profile">
+            <p class="profile-nome">{{ profile.nome }}</p>
+            <p class="profile-tempo">{{ rule.tempo }}</p>
+        </div>
+        <a href="{% url 'add_time' profile.id %}" class="add-tempo">Adicionar tempo</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <div class="titulo">
+            <h1 class="titulo-dash">Dashboard</h1>
+        </div>
+        <div class="opcoes">
+            <a href="{% url 'create_session' %}" class="iniciar-sessao">Iniciar Sessão</a>
+            <a href="{% url 'profiles' %}" class="gerenciar-profile">Gerenciar Pefil</a>
+            <a href="{% url 'devices' %}" class="gerenciar-device">Gerenciar Console</a>
+        </div>
+        <div class="sessoes-ativos">
+            <h2 class="sessoes-titulo">Sessões ativas</h2>
+            {% if sessoes %}
+            {% for sessao in sessoes %}
+            <a href="#" class="sessao-link">
+                <div class="sessao-div">
+                    <p class="sessao-usuario">{{ sessao.usuario.nome }}</p>
+                    <p class="sessao-device">{{ sessao.device.nome }}</p>
+                    <p class="sessao-cronometro" data-fim="{{ sessao.fim_sessao }}">--:--:--</p>
+                </div>
+            </a>
+            {% endfor %}
+            {% else %}
+                <p class="sessao-vazia">Nenhuma sessão ativa</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function iniciarCronometros() {
+        const elementos = document.querySelectorAll('.sessao-cronometro');
+
+        function atualizar() {
+            const agora = new Date();
+
+            elementos.forEach(el => {
+                const fim = new Date(el.dataset.fim);
+                let diff = fim - agora;
+
+                if (diff <= 0) {
+                    el.textContent = "Encerrado";
+                    el.classList.add("tempo-zero");
+                    return;
+                }
+
+                const horas = Math.floor(diff / (1000 * 60 * 60));
+                const minutos = Math.floor((diff / (1000 * 60)) % 60);
+                const segundos = Math.floor((diff / 1000) % 60);
+
+                el.textContent =
+                    String(horas).padStart(2, '0') + ":" +
+                    String(minutos).padStart(2, '0') + ":" +
+                    String(segundos).padStart(2, '0');
+                    
+                if (diff < 5 * 60 * 1000) {
+                    el.style.color = "red";
+                }
+            });
+        }
+
+        atualizar();
+        setInterval(atualizar, 1000);
+    }
+
+    document.addEventListener("DOMContentLoaded", iniciarCronometros);
+</script>
