@@ -61,6 +61,7 @@ ControlPlay/
 ├── setup/ # Configurações do projeto
 
 └── .gitignore
+
 ---
 
 Este projeto utiliza variáveis de ambiente para configurações sensíveis.
