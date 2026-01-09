@@ -61,6 +61,31 @@ ControlPlay/
 ├── setup/ # Configurações do projeto
 
 └── .gitignore
+---
+
+Este projeto utiliza variáveis de ambiente para configurações sensíveis.
+
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+
+```env
+    SECRET_KEY=your-secret-key-here
+
+    DB_NAME=controlplay
+    DB_USER=postgres
+    DB_PASSWORD=postgres
+    DB_HOST=localhost
+    DB_PORT=5432
+```
+⚠️ Nunca versionar o arquivo .env
+
+🐘 Configurando o PostgreSQL
+Crie um banco de dados:
+
+```sql
+    CREATE DATABASE controlplay;
+```
+
+Certifique-se de que as credenciais informadas no .env estão corretas.
 
 ---
 
