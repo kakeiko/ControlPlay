@@ -49,11 +49,17 @@ Esse método gerava erros e falta de controle. O objetivo do projeto é automati
 ## 📁 Estrutura do Projeto
 
 ControlPlay/
+
 ├── core/ # Aplicação principal (models, views, lógica)
+
 ├── templates/ # Templates HTML
+
 ├── manage.py # Comandos Django
+
 ├── requirements.txt # Dependências
+
 ├── setup/ # Configurações do projeto
+
 └── .gitignore
 
 ---
