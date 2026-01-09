@@ -74,8 +74,9 @@ Acesse a pasta do projeto:
 
 ```bash
     cd ControlPlay
-    Crie um ambiente virtual:
 ```
+Crie um ambiente virtual:
+
 ```bash
     python -m venv venv
 ```
