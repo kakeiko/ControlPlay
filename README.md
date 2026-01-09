@@ -143,6 +143,7 @@ Acesse no navegador:
 ```
 
 ⚔️ Desafios e Aprendizados
+
 Estudo de conceitos de redes, como IP, tabela ARP e estrutura de MAC Address
 
 Implementação do cronômetro:
@@ -154,6 +155,7 @@ Avaliação de async
 Solução final no frontend, garantindo melhor desempenho e usabilidade
 
 📌 Próximos Passos
+
 Interface com CSS e layout responsivo
 
 Identificação automática de dispositivos via rede
@@ -162,8 +164,10 @@ Dashboard visual de uso e sessões
 
 
 🤝 Contribuição
+
 Contribuições são bem-vindas!
 Sinta-se à vontade para abrir issues ou pull requests.
 
 📜 Licença
+
 Projeto de código aberto, livre para uso e estudo.
