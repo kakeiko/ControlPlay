@@ -15,7 +15,7 @@ Esse método gerava erros e falta de controle. O objetivo do projeto é automati
 
 ## 🚀 Funcionalidades
 
-- CRUD quase completo para:
+- CRUD completo para:
   - Perfis
   - Dispositivos
   - Regras
@@ -25,16 +25,14 @@ Esse método gerava erros e falta de controle. O objetivo do projeto é automati
   - Backend informa início e término da sessão
   - Frontend monta e executa o cronômetro
   - Evita processamento contínuo no backend
+  - Termina sessão ao acabar o tempo
 
-- Histórico de atividades:
-  - Sessão iniciada
-  - Perfil criado
-  - Eventos relevantes do sistema
-
-- Frontend simples:
+- Frontend:
   - HTML básico
-  - Sem CSS (utilizado apenas para testar funcionalidades)
-
+  - CSS básico
+- Controle de rede:
+    - Identificação por IP e MAC Address
+    - Base para futuras integrações de bloqueio real
 ---
 
 ## 🛠 Tecnologias Utilizadas até o momento
@@ -136,19 +134,19 @@ Inicie o servidor:
 ```bash
     python manage.py runserver
 ```
-Rode a imagem do redis no Docker:
+Suba o Redis com Docker:
 
 ```bash
     docker run -d --name redis -p 6379:6379 redis
 ```
 
-Inicie o worker do celery:
+Inicie o worker do Celery:
 
 ```bash
     celery -A setup  worker -l info --pool=solo
 ```
 
-Inicie o beat do celery:
+Inicie o Celery Beat:
 
 ```bash
     celery -A setup beat -l info
@@ -174,11 +172,9 @@ Solução final no frontend, garantindo melhor desempenho e usabilidade
 
 📌 Próximos Passos
 
-Interface com CSS e layout responsivo
-
-Identificação automática de dispositivos via rede
-
 Dashboard visual de uso e sessões
+
+Tentativa de bloqueio de rede automático
 
 
 🤝 Contribuição
