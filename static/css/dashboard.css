@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--cor-preto);
+    color: var(--cor-amarelo);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px;
+}
+
+.titulo {
+    margin-bottom: 32px;
+}
+
+.titulo-dash {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--cor-amarelo);
+    border-left: 6px solid #5C5CE0;
+    padding-left: 16px;
+}
+
+.opcoes {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.opcoes a {
+    text-decoration: none;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--cor-amarelo);
+    background: linear-gradient(135deg, #5C5CE0, #7878FA);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+}
+
+.opcoes a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(92, 92, 224, 0.4);
+    opacity: 0.95;
+}
+
+.sessoes-ativos {
+    background-color: #1A1A1A;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.sessoes-titulo {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--cor-amarelo);
+}
+
+.sessao-vazia {
+    text-align: center;
+    color: #aaaaaa;
+    padding: 30px 0;
+    font-size: 1rem;
+}
+
+.sessao-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.sessao-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background-color: var(--cor-cinza-escuro);
+    border-radius: 10px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sessao-div:hover {
+    background-color: var(--cor-marrom);
+    transform: scale(1.01);
+}
+
+.sessao-usuario {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.sessao-device {
+    color: #cccccc;
+    font-size: 0.95rem;
+}
+
+.sessao-cronometro {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #5C5CE0;
+}
+
+.tempo-zero {
+    color: var(--cor-vermelho) !important;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .sessao-div {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .sessao-cronometro {
+        text-align: left;
+    }
+
+    .opcoes {
+        flex-direction: column;
+    }
+}
+
+:root{
+    --cor-preto: #090f13;
+    --cor-cinza-escuro: #171f25;
+    --cor-marrom: #752e2b;
+    --cor-vermelho: #c90a02;
+    --cor-amarelo: #f2eab7;
+}

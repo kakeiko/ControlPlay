@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/dashboard.css' %}">
     <title>Dashboard</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
             <h1 class="titulo-dash">Dashboard</h1>
         </div>
         <div class="opcoes">
-            <a href="{% url 'create_session' %}" class="iniciar-sessao">Iniciar Sessão</a>
+            <a href="{% url 'sessions' %}" class="iniciar-sessao">Gerenciar Sessão</a>
             <a href="{% url 'profiles' %}" class="gerenciar-profile">Gerenciar Pefil</a>
             <a href="{% url 'devices' %}" class="gerenciar-device">Gerenciar Console</a>
         </div>

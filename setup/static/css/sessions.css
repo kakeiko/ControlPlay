@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f0f;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px;
+}
+
+.Sessions {
+    background-color: #1A1A1A;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.Sessions a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.session {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background-color: #111111;
+    border-radius: 10px;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.session:hover {
+    background-color: #181818;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.session-nome {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.session-device {
+    font-size: 0.95rem;
+    color: #cccccc;
+}
+
+.session-start {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #5C5CE0;
+    white-space: nowrap;
+}
+
+.sem-session {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 1rem;
+    padding: 30px 0;
+}
+
+.btn-criar {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 26px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #5C5CE0, #7878FA);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+}
+
+.btn-criar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(92, 92, 224, 0.4);
+    opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+    .session {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .session-start {
+        color: #aaaaaa;
+    }
+
+    .btn-criar {
+        width: 100%;
+        text-align: center;
+    }
+}

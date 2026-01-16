@@ -3,25 +3,55 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '/css/session_create.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sessão</title>
 </head>
 <body>
     <div class="container">
-        <form class="tempo" action="{% url 'create_session'%}" method="POST">
+        <form class="tempo" action="{% url 'create_session' %}" method="POST">
             {% csrf_token %}
             <div class="form">
-                {% for field in form.visible_fields %}
-                    <div class="labels-forms">
-                        <label for="{{ field.id_for_label }}" class="nome">{{ field.label }}:</label>
-                        {{ field}}                    
-                    </div>
-                {% endfor %}
+
+                <div class="labels-forms">
+                    <label for="profile-id" class="nome">Perfil</label>
+                    <select name="usuario" id="profile-id" required>
+                        <option value="" disabled selected>
+                            Escolha o Perfil
+                        </option>
+
+                        {% for p in profiles %}
+                            <option value="{{ p.id }}">
+                                {{ p.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="labels-forms">
+                    <label for="device-id" class="nome">Console</label>
+                    <select name="device" id="device-id" required>
+                        <option value="" disabled selected>
+                            Escolha o Console
+                        </option>
+
+                        {% for d in devices %}
+                            <option value="{{ d.id }}">
+                                {{ d.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
             </div>
+
             <div class="area-btn">
-                <button class="btn-criar" type="submit">Iniciar sessão</button>
+                <button class="btn-criar" type="submit">
+                    Iniciar sessão
+                </button>
             </div>
         </form>
+
     </div>
 </body>
 </html>

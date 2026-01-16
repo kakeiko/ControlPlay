@@ -12,10 +12,9 @@ class ProfileForm(forms.ModelForm):
 class DeviceForm(forms.ModelForm):
     class Meta:
         model = Device
-        fields = ['nome', 'macAddress',]
+        fields = ['nome', 'macAddress']
         widgets = {
             'nome':forms.TextInput({'class': 'input-nome', 'placeholder': 'nome do perfil'}),
-            'macAddress':forms.TextInput({'class': 'input-mac', 'placeholder': 'endereço do dispositivo'})
         }
 
 class RuleForm(forms.ModelForm):

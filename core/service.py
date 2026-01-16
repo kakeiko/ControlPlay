@@ -1,5 +1,5 @@
 from datetime import datetime
-from .models import Rule
+from .models import Rule, UsageSession
 import subprocess
 import re
 import requests
@@ -10,21 +10,6 @@ def format_mac(mac):
     mac = mac.lower()
     mac = mac.replace('-', '').replace(':', '').replace('.', '')
     return ':'.join(mac[i:i+2] for i in range(0, 12, 2))
-
-def usage_service(session, finalizada):
-    regra = Rule.objects.get(usuario=session.profile)
-    agora = datetime.now()
-    usado = agora - session.start_time
-    restante = regra.tempo - int(usado)
-    if finalizada:
-        session.end_time = datetime.now()
-        session.duracao = session.end_time - session.start_time
-        session.status = 'Desativo'
-        session.device.status = 'Desativo'
-        session.profile.status = 'Desativo'
-        regra.tempo -= session.duracao
-        # Aplicar lógica de bloquear acesso a internet
-    return int(usado), restante
 
 def get_device_type(mac, hostname):
     try:
@@ -63,13 +48,13 @@ def NetworkdiscoveryService():
                     hostname = 'N/A'
                 
                 tipo = get_device_type(mac,hostname)
-                if any(x in tipo for x in ['Playstation','Xbox','Nintendo','Computador']):
-                    tabela_arp.append({
-                        'ip': ip,
-                        'mac': mac,
-                        'tipo': tipo,
-                        'hostname': hostname
-                    })
+
+                tabela_arp.append({
+                    'ip': ip,
+                    'mac': mac,
+                    'tipo': tipo,
+                    'hostname': hostname
+                })
         
     print(tabela_arp)
     return tabela_arp

@@ -3,23 +3,47 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '/css/device_create.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conectar Console</title>
 </head>
 <body>
     <div class="container">
-        <form class="tempo" action="{% url 'create_device'%}" method="POST">
+        <form class="tempo" action="{% url 'create_device' %}" method="POST">
             {% csrf_token %}
+
             <div class="form">
                 {% for field in form.visible_fields %}
-                    <div class="labels-forms">
-                        <label for="{{ field.id_for_label }}" class="nome">{{ field.label }}:</label>
-                        {{ field}}                    
-                    </div>
+                    {% if field.name != 'macAddress' %}
+                        <div class="labels-forms">
+                            <label for="{{ field.id_for_label }}" class="nome">
+                                {{ field.label }}:
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
+
+                <div class="labels-forms">
+                    <label for="mac-id" class="nome">Mac Address</label>
+                    <select name="macAddress" id="mac-id" required>
+                        <option value="" disabled selected>
+                            Conecte um Console
+                        </option>
+
+                        {% for dispositivo in dispositivos_rede %}
+                            <option value="{{ dispositivo.mac }}">
+                                {{ dispositivo.hostname }} — {{ dispositivo.ip }} — {{ dispositivo.tipo_dispositivo }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
+
             <div class="area-btn">
-                <button class="btn-criar" type="submit">Conectar Console</button>
+                <button class="btn-criar" type="submit">
+                    Conectar Console
+                </button>
             </div>
         </form>
     </div>

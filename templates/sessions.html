@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '/css/sessions.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessões</title>
+</head>
+<body>
+    <div class="container">
+        <div class="Sessions">
+            {% if sessions %}
+                {% for s in sessions %}
+                    <a href="{% url 'session' s.id %}">
+                        <div class="session">
+                            <p class="session-nome">{{ s.usuario.nome }}</p>
+                            <p class="session-device">{{ s.device.nome }}</p>
+                            <p class="session-start">{{ s.start_time }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="sem-session">Não tem nenhum Sessão criado</p>
+            {% endif %}
+        </div>
+        <a href="{% url 'create_session' %}" class="btn-criar">Criar Sessão</a>
+    </div>
+</body>
+</html>

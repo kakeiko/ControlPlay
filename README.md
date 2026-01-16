@@ -15,7 +15,7 @@ Esse método gerava erros e falta de controle. O objetivo do projeto é automati
 
 ## 🚀 Funcionalidades
 
-- CRUD completo para:
+- CRUD quase completo para:
   - Perfis
   - Dispositivos
   - Regras
@@ -43,6 +43,7 @@ Esse método gerava erros e falta de controle. O objetivo do projeto é automati
 - Django  
 - HTML  
 - PostgreSQL
+- Docker
 
 ---
 
@@ -134,6 +135,23 @@ Inicie o servidor:
 
 ```bash
     python manage.py runserver
+```
+Rode a imagem do redis no Docker:
+
+```bash
+    docker run -d --name redis -p 6379:6379 redis
+```
+
+Inicie o worker do celery:
+
+```bash
+    celery -A setup  worker -l info --pool=solo
+```
+
+Inicie o beat do celery:
+
+```bash
+    celery -A setup beat -l info
 ```
 
 Acesse no navegador:

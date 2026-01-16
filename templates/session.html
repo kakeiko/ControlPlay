@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '/css/session.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessão</title>
+</head>
+<body>
+    <div class="container">
+        <div class="session">
+            <p class="session-nome">{{ session.usuario.nome }}</p>
+            <p class="session-device">{{ session.device.nome }}</p>
+            <p class="session-start">Começo: {{ session.start_time }}</p>
+            <p class="session-end">Final: {{ session.end_time }}</p>
+            <p class="session-tempo">Duração: {{ session.duracao }} minutos</p>
+        </div>
+        <a href="{% url 'add_time' session.usuario.id %}" class="add-tempo">Adicionar tempo</a>
+        <a href="{% url 'finaliza' session.id %}" class="finaliza">Finalizar Sessão</a>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '/css/profile.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
 </head>
@@ -10,7 +11,7 @@
     <div class="container">
         <div class="Profile">
             <p class="profile-nome">{{ profile.nome }}</p>
-            <p class="profile-tempo">{{ rule.tempo }}</p>
+            <p class="profile-tempo">tempo disponível: {{ rule.tempo }}</p>
         </div>
         <a href="{% url 'add_time' profile.id %}" class="add-tempo">Adicionar tempo</a>
     </div>

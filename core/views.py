@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, DeviceForm, RuleForm, UsageSessionForm
 from .models import Profile, Device, Rule, UsageSession
-from .service import format_mac, usage_service, NetworkdiscoveryService
+from .service import format_mac, NetworkdiscoveryService
 from datetime import timedelta
+from django.utils import timezone
 
 
 @login_required
@@ -82,15 +83,21 @@ def create_device(request):
     if request.method == 'POST':
         form = DeviceForm(request.POST)
         if form.is_valid():
-            form.data['macAddress'] = format_mac(form.data['macAddress'])
-            form.save()
+            device = form.save(commit=False)
+            device.macAddress = format_mac(device.macAddress)
+            device.save()
             return redirect('devices')
     else:
         form = DeviceForm()
-        NetworkdiscoveryService()
+        dispositivos_rede = NetworkdiscoveryService()
+        for d in dispositivos_rede:
+            if Device.objects.filter(macAddress=format_mac(d['mac'])):
+                dispositivos_rede.remove(d)
+            
 
-    return render(request,'device_create.html',{'form': form})
-
+    return render(
+        request,'device_create.html',{'form': form,'dispositivos_rede': dispositivos_rede})
+   
 @login_required
 def view_devices(request):
     devices = Device.objects.all()
@@ -111,23 +118,52 @@ def delete_device(request, id):
 # CRUD inicial do Usage Session
 @login_required
 def start_session(request):
+    devices = Device.objects.filter(status='Desativo')
+    profiles = Profile.objects.filter(status='Desativo')
     if request.method == "POST":
         form = UsageSessionForm(request.POST)
         if form.is_valid():
             form.save()
             session = UsageSession.objects.last()
             session.device.status = 'Ativo'
+            session.device.save()
             session.usuario.status = 'Ativo'
-            # adicionar fazer uma contagem de tempo com o celery (deixar para mais tarde)
+            session.usuario.save()
+            # adicionar fazer uma contagem de tempo com o celery (deixar para mais tarde), Proximo passo.
             return redirect('dashboard')
     else:
         form = UsageSessionForm()
-    
-    return render(request,'session_create.html', {'form':form})
+        
+
+    return render(request,'session_create.html', {'form':form, 'devices':devices, 'profiles':profiles})
 
 @login_required
 def get_session(request, id):
     session = get_object_or_404(UsageSession, pk=id)
-    usado, restante = usage_service(session, False)
-    return render(request, {"session":session, 'usado':usado, 'restante':restante})
+    return render(request, 'session.html', {"session":session})
 
+@login_required
+def get_sessions(request):
+    sessions = UsageSession.objects.all()
+    return render(request,'sessions.html' ,{'sessions':sessions})
+
+@login_required
+def finish_session(request, id):
+    session = get_object_or_404(UsageSession, pk=id)
+    regra = Rule.objects.get(usuario=session.usuario)
+    if session.end_time == '':
+        session.end_time = timezone.now()
+        session.duracao = int((session.end_time - session.start_time).total_seconds() / 60)
+        session.status = 'Desativo'
+        session.device.status = 'Desativo'
+        session.usuario.status = 'Desativo'
+        regra.tempo -= session.duracao
+        if regra.tempo < 0:
+            regra.tempo = 0
+        session.save()
+        session.device.save()
+        session.usuario.save()
+        regra.save()
+    else:
+        print('sessão ja finalizada')
+    return redirect('sessions')
