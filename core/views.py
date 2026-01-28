@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, DeviceForm, RuleForm, UsageSessionForm
-from .models import Profile, Device, Rule, UsageSession
-from .service import format_mac, NetworkdiscoveryService
-from datetime import timedelta
+from .models import Profile, Device, Rule, UsageSession, Logs
+from .service import format_mac, NetworkdiscoveryService,liberar_mac
+from datetime import timedelta,datetime
 from django.utils import timezone
+
 
 
 @login_required
@@ -18,6 +19,7 @@ def dashboard(request):
         fim_sessao = sessao.start_time + timedelta(minutes=regra.tempo)
         print(fim_sessao)
         sessoesDados.append({
+            "id":sessao.pk,
             "usuario": sessao.usuario,
             "device": sessao.device,
             "fim_sessao": fim_sessao.isoformat(),
@@ -51,6 +53,14 @@ def create_profile(request):
                 usuario=profile
             )
             rule.save()
+            log = Logs.objects.create(
+                    responsavel=request.user,
+                    acao=f'Criou um perfil de id: {profile.id}.',
+                    data = datetime.now(),
+                )
+            log.save()
+
+    
             return redirect('profiles')
     else:
         form = form = ProfileForm()
@@ -70,6 +80,12 @@ def add_time(request, id):
         if form.is_valid():
             rule.tempo += int(form.data['tempo'])
             rule.save()
+            log = Logs.objects.create(
+                    responsavel=request.user,
+                    acao=f'Adicionou {form.data['tempo']} minutos para o perfil: {rule.usuario.id}.',
+                    data = datetime.now(),
+                )
+            log.save()
             return redirect('profile',id)
     else:
         form = RuleForm()
@@ -86,6 +102,12 @@ def create_device(request):
             device = form.save(commit=False)
             device.macAddress = format_mac(device.macAddress)
             device.save()
+            log = Logs.objects.create(
+                    responsavel=request.user,
+                    acao=f'Criou o Console de id: {device.id}.',
+                    data = datetime.now(),
+                )
+            log.save()
             return redirect('devices')
     else:
         form = DeviceForm()
@@ -123,13 +145,20 @@ def start_session(request):
     if request.method == "POST":
         form = UsageSessionForm(request.POST)
         if form.is_valid():
-            form.save()
+            session_2 = form.save(commit=False)
+            session_2.start_time = datetime.now()
+            session_2.save()
             session = UsageSession.objects.last()
             session.device.status = 'Ativo'
             session.device.save()
             session.usuario.status = 'Ativo'
             session.usuario.save()
-            # adicionar fazer uma contagem de tempo com o celery (deixar para mais tarde), Proximo passo.
+            log = Logs.objects.create(
+                    responsavel=request.user,
+                    acao=f'Iniciou a sessão de id: {session.id}.',
+                    data = datetime.now(),
+                )
+            log.save()
             return redirect('dashboard')
     else:
         form = UsageSessionForm()
@@ -151,7 +180,7 @@ def get_sessions(request):
 def finish_session(request, id):
     session = get_object_or_404(UsageSession, pk=id)
     regra = Rule.objects.get(usuario=session.usuario)
-    if session.end_time == '':
+    if session.end_time == None:
         session.end_time = timezone.now()
         session.duracao = int((session.end_time - session.start_time).total_seconds() / 60)
         session.status = 'Desativo'
@@ -164,6 +193,32 @@ def finish_session(request, id):
         session.device.save()
         session.usuario.save()
         regra.save()
+        log = Logs.objects.create(
+                responsavel=request.user,
+                acao=f'Finalizou a sessão de id: {session.id}.',
+                data = datetime.now(),
+            )
+        log.save()
     else:
         print('sessão ja finalizada')
     return redirect('sessions')
+
+@login_required
+def liberar(request, id):
+    device = get_object_or_404(Device, pk=id)
+    liberar_mac(device.macAddress)
+    log = Logs.objects.create(
+            responsavel=request.user,
+            acao=f'Liberou o Console de id: {device.id}.',
+            data = datetime.now(),
+        )
+    log.save()
+    return redirect('devices')
+
+
+
+# View Logs
+@login_required
+def get_Logs(request):
+    logs = Logs.objects.all()
+    return render(request, 'logs.html', {'logs':logs})

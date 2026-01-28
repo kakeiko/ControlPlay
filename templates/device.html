@@ -9,9 +9,13 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'dashboard' %}" class="btn-control">ControlPlay</a>
         <div class="Device">
             <p class="device-nome">{{ device.nome }}</p>
             <p class="device-address">{{ device.macAddress }}</p>
+            {% if device.blocked %}
+                <a href="{% url 'liberar' device.id %}" class="btn-liberar">liberar</a>
+            {% endif %}
         </div>
     </div>
 </body>

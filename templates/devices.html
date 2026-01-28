@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'dashboard' %}" class="btn-control">ControlPlay</a>
         <div class="Devices">
             {% if devices %}
                 {% for device in devices %}

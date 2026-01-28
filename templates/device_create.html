@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'dashboard' %}" class="btn-control">ControlPlay</a>
         <form class="tempo" action="{% url 'create_device' %}" method="POST">
             {% csrf_token %}
 

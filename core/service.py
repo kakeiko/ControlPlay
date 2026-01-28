@@ -3,7 +3,10 @@ from .models import Rule, UsageSession
 import subprocess
 import re
 import requests
+import os
 import socket
+from routeros_api import RouterOsApiPool
+from .models import Device
 
 # Nomaliza os endereços mac para não ter o mesmo console porém com nomes diferentes
 def format_mac(mac):
@@ -58,3 +61,37 @@ def NetworkdiscoveryService():
         
     print(tabela_arp)
     return tabela_arp
+
+def conectar_mikrotik():
+    api_pool = RouterOsApiPool(
+        host=os.getenv('MKT_HOST'),
+        username=os.getenv('MKT_USERNAME'),
+        password=os.getenv('MKT_PASSWORD'),
+        plaintext_login=True
+    )
+    return api_pool.get_api()
+
+def bloquear_mac(mac): 
+    api = conectar_mikrotik()
+    firewall_filter = api.get_resource('/ip/firewall/filter')
+
+    firewall_filter.add(
+        chain='forward',
+        src_mac_address=mac.upper(),
+        action='drop',
+        comment='Bloqueado pelo ControlPlay'
+    )
+    device = Device.objects.get(macAddress=mac)
+    device.blocked = True
+    device.save()
+
+def liberar_mac(mac):
+    api = conectar_mikrotik()
+    firewall_filter = api.get_resource('/ip/firewall/filter')
+
+    regras = firewall_filter.get()
+
+    for regra in regras:
+        if regra.get('src-mac-address') == mac.upper() and \
+           regra.get('comment') == 'Bloqueado pelo ControlPlay':
+            firewall_filter.remove(id=regra['id'])

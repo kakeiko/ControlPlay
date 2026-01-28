@@ -2,6 +2,7 @@ from celery import shared_task
 from django.utils import timezone
 from datetime import timedelta
 from .models import Rule, UsageSession
+from .service import bloquear_mac
 
 @shared_task
 def checar_tempo():
@@ -19,6 +20,7 @@ def checar_tempo():
             regra.tempo -= s.duracao
             if regra.tempo < 0:
                 regra.tempo = 0
+            bloquear_mac(s.device.macAddress)
             s.save()
             s.device.save()
             s.usuario.save()

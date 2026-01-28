@@ -33,3 +33,8 @@ class UsageSession(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=100, blank=False, null=False, choices=OPCOES_STATUS, default="Ativo")
     duracao = models.IntegerField(blank=True, null=True)
+
+class Logs(models.Model):
+    responsavel = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, blank=False, related_name="responsavel")
+    acao = models.CharField(max_length=255, blank=False, null=False)
+    data = models.DateTimeField(blank=False, null=False, default=datetime.now())

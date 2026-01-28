@@ -42,6 +42,42 @@ body {
     width: fit-content;
 }
 
+.btn-control {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-control:hover {
+    opacity: 0.85;
+    transform: translateX(-3px);
+}
+
+.btn-liberar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #28c76f, #48da89);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+}
+
+.btn-liberar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(40, 199, 111, 0.4);
+    opacity: 0.95;
+}
+
+
 @media (max-width: 600px) {
     .container {
         padding: 24px 16px;
@@ -53,5 +89,14 @@ body {
 
     .device-address {
         font-size: 0.95rem;
+    }
+    .btn-control {
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    .btn-liberar {
+        width: 100%;
+        text-align: center;
     }
 }

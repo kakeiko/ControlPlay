@@ -1,47 +1,67 @@
 # 🎮 ControlPlay
 
-Sistema de **controle e gerenciamento de tempo por dispositivo** desenvolvido em Python com Django, PostgreSQL e frontend simples em HTML.
+ControlPlay é um **sistema web para controle e gerenciamento de tempo de uso por dispositivo**, desenvolvido em Python com Django, utilizando PostgreSQL, Celery, Redis e um frontend simples em HTML + CSS.
 
-O projeto permite registrar dispositivos, perfis, regras e sessões de uso, oferecendo controle centralizado e histórico de atividades.
+O sistema foi pensado para ambientes como game houses, lan houses ou laboratórios, oferecendo controle centralizado de sessões, usuários, dispositivos e histórico de atividades.
 
 ---
 
 ## 🧠 Motivação
 
-A ideia do ControlPlay surgiu após observar o controle manual de tempo em uma game house, onde os horários eram anotados em papel.  
-Esse método gerava erros e falta de controle. O objetivo do projeto é automatizar esse processo, tornando-o mais confiável, escalável e fácil de gerenciar.
+O projeto surgiu a partir da observação de um problema real:
+o controle manual de tempo em game houses, feito por anotações em papel, gera erros, retrabalho e falta de histórico confiável.
+
+O ControlPlay automatiza esse processo, permitindo:
+
+    - Controle preciso do tempo
+    - Histórico de sessões
+    - Redução de erros humanos
+    - Base sólida para automações futuras (ex: bloqueio real de rede)
 
 ---
 
 ## 🚀 Funcionalidades
 
-- CRUD completo para:
-  - Perfis
-  - Dispositivos
-  - Regras
-  - Sessões de uso
+📋 Gerenciamento (CRUD)
 
-- Controle de tempo por sessão:
-  - Backend informa início e término da sessão
-  - Frontend monta e executa o cronômetro
-  - Evita processamento contínuo no backend
-  - Termina sessão ao acabar o tempo
+    - Perfis de usuários
+    - Dispositivos (consoles / PCs)
+    - Regras de uso
+    - Sessões de utilização
 
-- Frontend:
-  - HTML básico
-  - CSS básico
-- Controle de rede:
-    - Identificação por IP e MAC Address
-    - Base para futuras integrações de bloqueio real
+⏱ Controle de Sessões
+
+    - Registro de início e fim da sessão no backend
+    - Cronômetro executado no frontend
+    - Evita processamento contínuo no servidor
+    - Finalização automática da sessão ao término do tempo
+
+🌐 Controle de Rede (Base)
+
+    - Identificação de dispositivos por:
+        - IP
+        - MAC Address
+    - Estrutura preparada para futuras integrações com bloqueio real de rede (ex: Mikrotik)
+
+📜 Logs do Sistema
+
+    - Registro de ações realizadas
+    - Responsável pela ação
+    - Data e horário
+    - Histórico completo para auditoria
 ---
 
 ## 🛠 Tecnologias Utilizadas até o momento
 
 - Python  
 - Django  
-- HTML  
+- HTML
+- CSS
 - PostgreSQL
 - Docker
+- Redis
+- Celery
+- Celery Beat
 
 ---
 
@@ -63,6 +83,8 @@ ControlPlay/
 
 ---
 
+## 🔐 Variáveis de Ambiente
+
 Este projeto utiliza variáveis de ambiente para configurações sensíveis.
 
 Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
@@ -76,6 +98,9 @@ Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
     PASSWORD=postgres
     HOST=localhost
     PORT=5432
+    MKT_HOST=IP_MIKROTIK
+    MKT_USERNAME=SEU_USUARIO
+    MKT_PASSWORD=SUA_PASSWORD
 ```
 ⚠️ Nunca versionar o arquivo .env
 
@@ -94,94 +119,91 @@ Certifique-se de que as credenciais informadas no .env estão corretas.
 
 1. Clone o repositório:
  ```bash
-    git clone https://github.com/kakeiko/ControlPlay.git
+git clone https://github.com/kakeiko/ControlPlay.git
 ```
 Acesse a pasta do projeto:
 
 ```bash
-    cd ControlPlay
+cd ControlPlay
 ```
 Crie um ambiente virtual:
 
 ```bash
-    python -m venv venv
+python -m venv venv
 ```
 Ative o ambiente virtual:
 
 Windows
 
 ```bash
-    venv\Scripts\activate
+venv\Scripts\activate
 ```
 Linux / MacOS
 
 ```bash
-    source venv/bin/activate
+source venv/bin/activate
 ```
 
 Instale as dependências:
 
 ```bash
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 Execute as migrations:
 
 ```bash
-    python manage.py migrate
+python manage.py migrate
 ```
 Inicie o servidor:
 
 ```bash
-    python manage.py runserver
+python manage.py runserver
 ```
 Suba o Redis com Docker:
 
 ```bash
-    docker run -d --name redis -p 6379:6379 redis
+docker run -d --name redis -p 6379:6379 redis
 ```
 
 Inicie o worker do Celery:
 
 ```bash
-    celery -A setup  worker -l info --pool=solo
+celery -A setup  worker -l info --pool=solo
 ```
 
 Inicie o Celery Beat:
 
 ```bash
-    celery -A setup beat -l info
+celery -A setup beat -l info
 ```
 
 Acesse no navegador:
 
 ```cpp
-    http://127.0.0.1:8000/
+http://127.0.0.1:8000/
 ```
 
-⚔️ Desafios e Aprendizados
+# ⚔️ Desafios e Aprendizados
 
-Estudo de conceitos de redes, como IP, tabela ARP e estrutura de MAC Address
+- Estudo de conceitos de redes, como IP, tabela ARP e estrutura de MAC Address
+- Implementação do cronômetro:
+    - Tentativa inicial no backend
+    - Avaliação de async
+    - Solução final no frontend, garantindo melhor desempenho e usabilidade
 
-Implementação do cronômetro:
+# 📌 Possíveis Evoluções
 
-Tentativa inicial no backend
-
-Avaliação de async
-
-Solução final no frontend, garantindo melhor desempenho e usabilidade
-
-📌 Próximos Passos
-
-Dashboard visual de uso e sessões
-
-Tentativa de bloqueio de rede automático
+    - Dashboard visual de uso e estatísticas
+    - Gráficos de sessões e tempo consumido
+    - Bloqueio automático de rede por dispositivo
+    - Integração direta com equipamentos de rede
 
 
-🤝 Contribuição
+# 🤝 Contribuição
 
 Contribuições são bem-vindas!
 Sinta-se à vontade para abrir issues ou pull requests.
 
-📜 Licença
+# 📜 Licença
 
 Projeto de código aberto, livre para uso e estudo.

@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'dashboard' %}" class="btn-control">ControlPlay</a>
         <div class="Profile">
             <p class="profile-nome">{{ profile.nome }}</p>
             <p class="profile-tempo">tempo disponível: {{ rule.tempo }}</p>

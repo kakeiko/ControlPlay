@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs do Sistema</title>
+    <link rel="stylesheet" href="{% static 'css/logs.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="container">
+    <a href="{% url 'dashboard' %}" class="btn-control">ControlPlay</a>
+    <h1 class="titulo">Logs do Sistema</h1>
+
+    {% if logs %}
+        <div class="logs-lista">
+            <div class="logs-header">
+                <span>Responsável</span>
+                <span>Ação</span>
+                <span>Data</span>
+            </div>
+
+            {% for log in logs %}
+                <div class="log-item">
+                    <span class="log-user">
+                        {% if log.responsavel %}
+                            {{ log.responsavel.username }}
+                        {% else %}
+                            Sistema
+                        {% endif %}
+                    </span>
+
+                    <span class="log-acao">{{ log.acao }}</span>
+
+                    <span class="log-data">
+                        {{ log.data|date:"d/m/Y H:i" }}
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="sem-logs">Nenhum log registrado.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

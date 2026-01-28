@@ -21,7 +21,7 @@
             <h2 class="sessoes-titulo">Sessões ativas</h2>
             {% if sessoes %}
             {% for sessao in sessoes %}
-            <a href="#" class="sessao-link">
+            <a href="{% url 'session' sessao.id %}" class="sessao-link">
                 <div class="sessao-div">
                     <p class="sessao-usuario">{{ sessao.usuario.nome }}</p>
                     <p class="sessao-device">{{ sessao.device.nome }}</p>

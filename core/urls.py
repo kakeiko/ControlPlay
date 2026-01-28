@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import dashboard, view_profiles, view_profile, add_time, create_profile, view_device, view_devices, create_device, start_session, get_sessions, get_session, finish_session
+from .views import dashboard, view_profiles, view_profile, add_time, create_profile, view_device, view_devices, create_device, start_session, get_sessions, get_session, finish_session, liberar, get_Logs
 
 urlpatterns = [
     path('', dashboard, name='dashboard'),
@@ -14,4 +14,6 @@ urlpatterns = [
     path('sessions/', get_sessions, name='sessions'),
     path('session/<int:id>', get_session, name='session'),
     path('finaliza/<int:id>', finish_session, name='finaliza'),
+    path('liberar/<int:id>', liberar, name='liberar'),
+    path('logs/', get_Logs, name='LOGS'),
 ]
