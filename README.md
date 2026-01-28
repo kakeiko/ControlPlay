@@ -13,10 +13,10 @@ o controle manual de tempo em game houses, feito por anotações em papel, gera 
 
 O ControlPlay automatiza esse processo, permitindo:
 
-    - Controle preciso do tempo
-    - Histórico de sessões
-    - Redução de erros humanos
-    - Base sólida para automações futuras (ex: bloqueio real de rede)
+- Controle preciso do tempo
+- Histórico de sessões
+- Redução de erros humanos
+- Base sólida para automações futuras (ex: bloqueio real de rede)
 
 ---
 
@@ -24,31 +24,31 @@ O ControlPlay automatiza esse processo, permitindo:
 
 📋 Gerenciamento (CRUD)
 
-    - Perfis de usuários
-    - Dispositivos (consoles / PCs)
-    - Regras de uso
-    - Sessões de utilização
+- Perfis de usuários
+- Dispositivos (consoles / PCs)
+- Regras de uso
+- Sessões de utilização
 
 ⏱ Controle de Sessões
 
-    - Registro de início e fim da sessão no backend
-    - Cronômetro executado no frontend
-    - Evita processamento contínuo no servidor
-    - Finalização automática da sessão ao término do tempo
+- Registro de início e fim da sessão no backend
+- Cronômetro executado no frontend
+- Evita processamento contínuo no servidor
+- Finalização automática da sessão ao término do tempo
 
 🌐 Controle de Rede (Base)
 
-    - Identificação de dispositivos por:
-        - IP
-        - MAC Address
-    - Estrutura preparada para futuras integrações com bloqueio real de rede (ex: Mikrotik)
+- Identificação de dispositivos por:
+    - IP
+    - MAC Address
+- Estrutura preparada para futuras integrações com bloqueio real de rede (ex: Mikrotik)
 
 📜 Logs do Sistema
 
-    - Registro de ações realizadas
-    - Responsável pela ação
-    - Data e horário
-    - Histórico completo para auditoria
+- Registro de ações realizadas
+- Responsável pela ação
+- Data e horário
+- Histórico completo para auditoria
 ---
 
 ## 🛠 Tecnologias Utilizadas até o momento
@@ -92,12 +92,11 @@ Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 ```env
     SECRET_KEY=your-secret-key-here
 
-    ENGINE=django.db.backends.postgresql_psycopg2
-    NAME=controlplay
-    USER=postgres
-    PASSWORD=postgres
-    HOST=localhost
-    PORT=5432
+    DB_NAME=controlplay
+    DB_USER=postgres
+    DB_PASSWORD=postgres
+    DB_HOST=localhost
+
     MKT_HOST=IP_MIKROTIK
     MKT_USERNAME=SEU_USUARIO
     MKT_PASSWORD=SUA_PASSWORD
@@ -183,7 +182,7 @@ Acesse no navegador:
 http://127.0.0.1:8000/
 ```
 
-# ⚔️ Desafios e Aprendizados
+### ⚔️ Desafios e Aprendizados
 
 - Estudo de conceitos de redes, como IP, tabela ARP e estrutura de MAC Address
 - Implementação do cronômetro:
@@ -191,7 +190,7 @@ http://127.0.0.1:8000/
     - Avaliação de async
     - Solução final no frontend, garantindo melhor desempenho e usabilidade
 
-# 📌 Possíveis Evoluções
+### 📌 Possíveis Evoluções
 
     - Dashboard visual de uso e estatísticas
     - Gráficos de sessões e tempo consumido
@@ -199,11 +198,11 @@ http://127.0.0.1:8000/
     - Integração direta com equipamentos de rede
 
 
-# 🤝 Contribuição
+### 🤝 Contribuição
 
 Contribuições são bem-vindas!
 Sinta-se à vontade para abrir issues ou pull requests.
 
-# 📜 Licença
+### 📜 Licença
 
 Projeto de código aberto, livre para uso e estudo.
