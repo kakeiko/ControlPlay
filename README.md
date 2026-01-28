@@ -192,10 +192,10 @@ http://127.0.0.1:8000/
 
 ### 📌 Possíveis Evoluções
 
-    - Dashboard visual de uso e estatísticas
-    - Gráficos de sessões e tempo consumido
-    - Bloqueio automático de rede por dispositivo
-    - Integração direta com equipamentos de rede
+- Dashboard visual de uso e estatísticas
+- Gráficos de sessões e tempo consumido
+- Bloqueio automático de rede por dispositivo
+- Integração direta com equipamentos de rede
 
 
 ### 🤝 Contribuição
